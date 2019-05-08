@@ -1,0 +1,8 @@
+{
+  "realm": "master",
+  "auth-server-url" : "http://localhost:8001/auth",
+  "resource" : "grzesiek87",
+  "credentials": {
+    "secret": "fba898f3-1dd5-4a17-b74f-3cd1ad4570f6"
+  }
+}
