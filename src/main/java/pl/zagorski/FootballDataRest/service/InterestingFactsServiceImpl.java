@@ -1,5 +1,6 @@
 package pl.zagorski.FootballDataRest.service;
 
+import org.apache.logging.log4j.util.PropertySource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.zagorski.FootballDataRest.dto.MatchDto;
@@ -114,10 +115,12 @@ public class InterestingFactsServiceImpl implements InterestingFactsService {
         Map<String, Integer> map = new HashMap<>();
 
         for (MatchDto match : matches) {
-            if (map.containsKey(match.getWinnerTeam())) {
-                map.put(match.getWinnerTeam(), map.get(match.getWinnerTeam()) + 1);
+
+            String winnerTeam = match.getWinnerTeam();
+            if (map.containsKey(winnerTeam)) {
+                map.put(winnerTeam, map.get(winnerTeam) + 1);
             } else {
-                map.put(match.getWinnerTeam(), 1);
+                map.put(winnerTeam, 1);
             }
         }
         return map;
@@ -135,7 +138,7 @@ public class InterestingFactsServiceImpl implements InterestingFactsService {
         Optional<TeamDto> result = countVictoriesInARow(matchDtoList)
                 .entrySet()
                 .stream()
-                .max((o1, o2) -> o1.getValue() > o2.getValue() ? 1 : o2.getValue() > o1.getValue() ? -1 : 0)
+                .max(Comparator.comparingInt(Map.Entry::getValue))
                 .map(stringIntegerEntry -> {
                     TeamDto teamDto = new TeamDto();
                     teamDto.setName(stringIntegerEntry.getKey());
@@ -148,6 +151,12 @@ public class InterestingFactsServiceImpl implements InterestingFactsService {
     private Map<String, Integer> countVictoriesInARow(List<MatchDto> matches) {
         Set<String> allTeams = new HashSet<>();
         int count;
+
+//
+//        matches
+//                .stream()
+//                .map(MatchDto::getHomeTeam)
+//                .collect(Collectors.toSet())
 
         for (MatchDto match : matches) {
             if (!allTeams.contains(match.getHomeTeam())) {

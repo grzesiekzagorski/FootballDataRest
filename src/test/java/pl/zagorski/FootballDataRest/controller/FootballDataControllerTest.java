@@ -34,7 +34,7 @@ public class FootballDataControllerTest {
     public void getAll() throws Exception {
       Assert.assertNotNull(footballDataController.getAll());
         mockMvc
-                .perform(MockMvcRequestBuilders.get("http://localhost:8080/footballData/getAll"))
+                .perform(MockMvcRequestBuilders.get("http://localhost:8080/footballData"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
     }

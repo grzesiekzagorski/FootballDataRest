@@ -14,8 +14,8 @@ public class MatchDto {
         private String homeTeam;
         private String awayTeam;
 
-        public MatchDtoBuilder matchday(int matchday) {
-            this.matchday = matchday;
+        public MatchDtoBuilder matchday(int matchday1) {
+            this.matchday = matchday1;
             return this;
         }
 
